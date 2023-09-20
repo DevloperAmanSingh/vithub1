@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { initializeApp } from "@react-native-firebase/app";
 import { getStorage, ref, uploadBytes , storage} from '@react-native-firebase/storage';
-import { View, Text, TextInput, Button, StyleSheet , Image , TouchableOpacity , Pi } from 'react-native';
+import { View, Text, TextInput, Button, StyleSheet , Image , TouchableOpacity , Pi, ScrollView } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { Dropdown } from 'react-native-element-dropdown';
 import { Ionicons } from '@expo/vector-icons';
@@ -77,9 +77,10 @@ const firebaseConfig = {
   
 
   return (
+    <ScrollView>
     <View style={styles.container}>
         <View>
-            <Text className="text-2xl font-bold text-start mx-auto items-cente mt-20 mb-16"> Fill up the form </Text>
+            <Text className="text-2xl font-bold text-start mx-auto items-cente mt-5 mb-16"> Fill up the form </Text>
         </View>
         <Text style={styles.label}>Category:</Text>
         <Dropdown
@@ -146,6 +147,7 @@ const firebaseConfig = {
 
       {/* Add any additional UI elements or styles as needed */}
     </View>
+    </ScrollView>
   );
 }
 

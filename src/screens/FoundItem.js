@@ -13,14 +13,13 @@ import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
 
 
-const LostItemForm = () => {
+const FoundItem = () => {
   const [value , setValue ] = useState('none')
   const [itemName, setItemName] = useState('');
   const[url,setUrl] = useState(null);
   const [itemDescription, setItemDescription] = useState('');
   const [contactInfo, setContactInfo] = useState('');
   const [selectedImage, setSelectedImage] = useState(null);
-  const db = getFirestore();
 
   const handleSubmit = async () => {
     // Ensure the user is authenticated before proceeding
@@ -49,7 +48,7 @@ const LostItemForm = () => {
       setItemName('');
       setItemDescription('');
       setContactInfo('');
-      console.log('doneeee')
+  
     } catch (error) {
       console.error('Error adding document: ', error);
     }
@@ -73,6 +72,7 @@ const LostItemForm = () => {
   }
 const [image,setImage] = useState(null);
 const [uploaing , setUploading] = useState(false);
+const db = getFirestore();
 // const auth = firebase.auth();
 const [user, setUser] = useState(null);
 
@@ -255,4 +255,4 @@ const styles = StyleSheet.create({
 
 });
 
-export default LostItemForm;
+export default FoundItem;

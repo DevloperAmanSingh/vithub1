@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "929063365529",
+    "project_id": "rnapp-c89e4",
+    "storage_bucket": "rnapp-c89e4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:929063365529:android:c6bb16d9a9f8dfad980108",
+        "android_client_info": {
+          "package_name": "com.anonymous.VITHub"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDX1z2Pp4ugd4vOgmkPi9KO8UztDucp0OM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

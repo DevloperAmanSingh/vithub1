@@ -30,9 +30,9 @@ export default function homepage({ navigation }) {
       itemName: "Spectacles",
       location: "Building DEF",
       imageURL:
-        "https://images.unsplash.com/photo-1483412468200-72182dbbc544?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8c3BlY3RhY2xlc3xlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60",
+        "https://firebasestorage.googleapis.com/v0/b/rnapp-c89e4.appspot.com/o/3b88edd4-c0ad-4511-929e-eabc61796829.jpeg?alt=media&token=ff59a944-f81d-4cde-a7a2-1270dbb041da",
       timeAgo: "1 Day ago",
-      category: "Accessories"
+      category: "Human"
     },
     {
       id: 4,
@@ -49,7 +49,7 @@ export default function homepage({ navigation }) {
     <ScrollView>
       
       <View className="flex flex-col mt-20 bg-purple-800 h-[100px] w-[344px] mx-auto rounded-md">
-        <View className="flex flex-row mx-4 mt-3 justify-between ">
+        <View className="flex flex-row mx-4 mt-5 justify-between ">
           <Text className="text-2xl font-bold text-white">Lost an item</Text>
           <Ionicons
             name="add-circle-outline"
@@ -63,34 +63,25 @@ export default function homepage({ navigation }) {
           Create an ad and let your friends know
         </Text>
       </View>
+      <View className="flex flex-col mt-5 bg-purple-800 h-[100px] w-[344px] mx-auto rounded-md">
+        <View className="flex flex-row mx-4 mt-5 justify-between ">
+          <Text className="text-2xl font-bold text-white">Found an item</Text>
+          <Ionicons
+            name="add-circle-outline"
+            color="lightblue"
+            size={30}
+            className=""
+            onPress={() => navigation.navigate("Found Item")}
+          />
+        </View>
+        <Text className=" mx-4  mt-1 text-white">
+          Create an ad and let your friends know
+        </Text>
+      </View>
       <View className="flex flex-row justify-between  mx-6 mt-9">
         <Text className="text-2xl">Search Lost Items </Text>
         <Ionicons name="search-outline" size={30} color="black" />
       </View>
-      {/* <TextInput
-          style={{ backgroundColor: 'lightgray', marginHorizontal: 6, padding: 10, borderRadius: 5, marginTop: 5 }}
-          placeholder="Search by category"
-          onChangeText={(text) => setSearchQuery(text)}
-          value={searchQuery}
-        /> */}
-        {/* Render Filtered Lost Item Cards */}
-        {/* {filteredProducts.map((product) => (
-          <TouchableOpacity key={product.id} onPress={() => alert(`You selected ${product.itemName}`)}>
-            <View style={{ marginTop: 5, height: 130, width: 344, backgroundColor: 'gray', marginHorizontal: 'auto', borderRadius: 10, flexDirection: 'row', justifyContent: 'space-between' }}>
-              <View style={{ marginHorizontal: 4, marginTop: 3 }}>
-                <Text style={{ fontSize: 16 }}>{product.timeAgo}</Text>
-                <Text style={{ fontSize: 20, fontWeight: 'bold', color: 'emerald' }}>{product.itemName}</Text>
-                <View style={{ flexDirection: 'row', alignItems: 'center', position: 'relative', top: 8 }}>
-                  <Ionicons name='location-outline' size={18} color='black' />
-                  <Text>Category: {product.category}</Text>
-                </View>
-              </View>
-              <View style={{ marginRight: 3, myAuto: 'auto' }}>
-                <Image source={{ uri: product.imageURL }} style={{ height: 100, width: 100, borderRadius: 10 }} />
-              </View>
-            </View>
-          </TouchableOpacity>
-        ))} */}
       {products.map((product) => (
         <View className="mt-5 h-[130px] w-[344px] bg-gray-200 mx-auto rounded-xl flex flex-row justify-between">
           <View className="mx-4 mt-3">
@@ -112,9 +103,6 @@ export default function homepage({ navigation }) {
           </View>
         </View>
       ))}
-
-
-      {/* </ScrollView> */}
     </ScrollView>
   );
 }

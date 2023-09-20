@@ -94,7 +94,7 @@ const RegistrationScreen = ({navigation}) => {
                 .then((userCredential) => {
                     const user = userCredential.user;
                     Alert.alert("Registeration success")
-                    navigation.replace('homepage')
+                    navigation.replace('Homescreen')
                     setLoading(false);
                 })
                 .catch((error) => {
@@ -118,6 +118,7 @@ const RegistrationScreen = ({navigation}) => {
     <SafeAreaView style={{backgroundColor: COLORS.white, flex: 1}}>
       <Loader visible={loading} />
       <ScrollView
+        showsVerticalScrollIndicator={false}
         contentContainerStyle={{paddingTop: 50, paddingHorizontal: 20}}>
         <Text style={{color: COLORS.black, fontSize: 40, fontWeight: 'bold'}}>
           Register

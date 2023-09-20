@@ -10,49 +10,60 @@ import { Dropdown } from 'react-native-element-dropdown';
 import { Ionicons } from '@expo/vector-icons';
 import { getFirestore, collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-
-
-
+import lostModel from '../../models/lostModel';
+import axios from 'axios';
 const LostItemForm = () => {
   const [value , setValue ] = useState('none')
   const [itemName, setItemName] = useState('');
   const[url,setUrl] = useState(null);
+  const[locationInfo,setlocationInfo] = useState('')
   const [itemDescription, setItemDescription] = useState('');
   const [contactInfo, setContactInfo] = useState('');
   const [selectedImage, setSelectedImage] = useState(null);
   const db = getFirestore();
 
   const handleSubmit = async () => {
-    // Ensure the user is authenticated before proceeding
-    
-  
-    // Create a Firestore document with user data and form inputs
     try {
-      const itemData = {
-        itemName: itemName,
-        itemDescription: itemDescription,
-        contactInfo: contactInfo,
-        imageURL: url,
-        // Include user data
-        // userId: user.uid
-        // userEmail: user.email,
-        // Add a timestamp
-        timestamp: serverTimestamp(),
-      };
-  
-      // Add the document to a Firestore collection
-      const docRef = await addDoc(collection(db, 'items'), itemData);
-      
-      console.log('Document written with ID: ', docRef.id);
-  
-      // Reset form inputs after successful submission
+      console.log(value,itemName,url,locationInfo,itemDescription,contactInfo,selectedImage)
+      const nmk = await fetch("https://5692-2409-40f4-3d-1e97-749d-28ff-939d-c07b.ngrok-free.app/found", {
+     
+      // Adding method type
+      method: "POST",
+       
+      // Adding body or contents to send
+      body: JSON.stringify({
+        "name": itemName,
+        "category": value,
+        "description": itemDescription,
+        "imageURL": url,
+        "location": locationInfo,
+        "contact": contactInfo
+      }),
+
+  })
+   
+  // Converting to JSON
+  .then(response => response.json())
+   
+  // Displaying results to console
+  .then(json => console.log(json));
+
+    // Check if creates contains the created item or response
+    // if (creates) {
+      console.log('Item created:');
+      // Reset your form fields and state
       setItemName('');
       setItemDescription('');
       setContactInfo('');
-      console.log('doneeee')
-    } catch (error) {
-      console.error('Error adding document: ', error);
-    }
+      setSelectedImage(null);
+      console.log('doneeee');
+    // } else {
+      // console.error('Error creating item. Response is undefined or null.');
+    // }
+  } catch (error) {
+    console.error('Error adding document: ', error);
+  }
+
   };
   
 
@@ -118,8 +129,9 @@ const app = firebase.initializeApp(firebaseConfig);
       const ref = firebase.storage().ref().child(fileName);
       await ref.put(blob)
       // get url 
-      const url = await ref.getDownloadURL();
-      setUrl(url);
+      const url = await ref.getDownloadURL().then(setUrl(url))
+      // setUrl(url);
+      console.log(url)
       setUploading(false)
     } catch(e) {
       console.log(e)
@@ -174,6 +186,13 @@ const app = firebase.initializeApp(firebaseConfig);
         value={contactInfo}
         onChangeText={setContactInfo}
         placeholder="Enter your contacts informations"
+      />
+      <Text style={styles.label}>Location:</Text>
+      <TextInput
+        style={styles.input}
+        value={locationInfo}
+        onChangeText={setlocationInfo}
+        placeholder="Enter location of found items"
       />
       <TouchableOpacity onPress={pickImageAsync}>
         <View style={styles.imageUploadContainer}>

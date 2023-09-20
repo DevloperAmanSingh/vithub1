@@ -1,11 +1,16 @@
-import { View, Text, SafeAreaView, Image, ScrollView , TextInput } from "react-native";
+import { View, Text, SafeAreaView, Image, ScrollView , TextInput , StyleSheet , TouchableOpacity } from "react-native";
 import React , {useState} from "react";
 import Ionicons from "@expo/vector-icons/Ionicons";
-
-export default function homepage({ navigation }) {
+export default function FoundPage({ navigation }) {
     const [searchQuery, setSearchQuery] = useState('');
     const [filteredProducts, setFilteredProducts] = useState([]);
-  
+    const [searchText, setSearchText] = useState('');
+
+  const handleSearch = ({navigation}) => {
+    // Implement your search functionality here
+    console.log('Searching for:', searchText);
+  };
+
   const products = [
     {
       id: 1,
@@ -46,24 +51,8 @@ export default function homepage({ navigation }) {
   ];
 
   return (
-    <ScrollView>
-      
-      <View className="flex flex-col mt-20 bg-purple-800 h-[100px] w-[344px] mx-auto rounded-md">
-        <View className="flex flex-row mx-4 mt-5 justify-between ">
-          <Text className="text-2xl font-bold text-white">Lost an item</Text>
-          <Ionicons
-            name="add-circle-outline"
-            color="lightblue"
-            size={30}
-            className=""
-            onPress={() => navigation.navigate("Lost Item")}
-          />
-        </View>
-        <Text className=" mx-4  mt-1 text-white">
-          Create an ad and let your friends know
-        </Text>
-      </View>
-      <View className="flex flex-col mt-5 bg-purple-800 h-[100px] w-[344px] mx-auto rounded-md">
+    <ScrollView className="bg-blue-200">
+      <View className="flex flex-col mt-4 bg-blue-800 h-[104px] w-[344px] mx-auto rounded-md">
         <View className="flex flex-row mx-4 mt-5 justify-between ">
           <Text className="text-2xl font-bold text-white">Found an item</Text>
           <Ionicons
@@ -71,27 +60,40 @@ export default function homepage({ navigation }) {
             color="lightblue"
             size={30}
             className=""
-            onPress={() => navigation.navigate("Found Item")}
+            onPress={() => navigation.navigate("founditem")}
           />
         </View>
         <Text className=" mx-4  mt-1 text-white">
-          Create an ad and let your friends know
+          Raise a ticket here to let your friends know or Search for lost items below.
         </Text>
       </View>
-      <View className="flex flex-row justify-between  mx-6 mt-9">
-        <Text className="text-2xl">Search Lost Items </Text>
-        <Ionicons name="search-outline" size={30} color="black" />
-      </View>
+      <View style={styles.searchBoxContainer}>
+      <TextInput
+        style={styles.searchInput}
+        placeholder="Search..."
+        placeholderTextColor="#888"
+        onChangeText={setSearchText}
+        value={searchText}
+      />
+      <TouchableOpacity style={styles.searchButton} onPress={handleSearch}>
+        <Ionicons name="search" size={24}  />
+      </TouchableOpacity>
+    </View>
       {products.map((product) => (
-        <View className="mt-5 h-[130px] w-[344px] bg-gray-200 mx-auto rounded-xl flex flex-row justify-between">
+        <View className="mt-5 h-[130px] w-[344px] bg-gray-200 mx-auto rounded-xl flex flex-row justify-between" 
+        
+        >
           <View className="mx-4 mt-3">
+            <View className="flex flex-row items-center" >
+          <Ionicons name="time-outline" size={15} color="black" />
             <Text className="text-sm">{product.timeAgo}</Text>
-            <Text className="text-xl font-bold text-emerald-800">
+          </View>
+            <Text className="text-xl font-bold text-blue-800">
               {product.itemName}
             </Text>
             <View className="flex flex-row relative top-8">
-              <Ionicons name="location-outline" size={18} color="black" />
-              <Text className="">Category : {product.category}</Text>
+              <Ionicons name="location-outline" size={18} color="black"  />
+              <Text className="">Category: {product.category}</Text>
             </View>
           </View>
           <View className="mr-3 my-auto">
@@ -106,3 +108,28 @@ export default function homepage({ navigation }) {
     </ScrollView>
   );
 }
+const styles = StyleSheet.create({
+    searchBoxContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: '#f5f5f5',
+        borderRadius: 10, // Rounded corners
+        paddingHorizontal: 10,
+        elevation: 3, 
+        marginHorizontal:10,
+        marginTop:20// Add a subtle shadow for a flat look
+      },
+      searchInput: {
+        flex: 1,
+        paddingVertical: 10,
+        paddingLeft: 10,
+        fontSize: 16,
+        color: '#333',
+      },
+      searchButton: {
+        // backgroundColor: 'white',
+        padding: 10,
+        borderRadius: 30, // Rounded corners
+      },
+    
+  });

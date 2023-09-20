@@ -118,8 +118,12 @@ const app = firebase.initializeApp(firebaseConfig);
       const ref = firebase.storage().ref().child(fileName);
       await ref.put(blob)
       // get url 
+     try{
       const url = await ref.getDownloadURL();
       setUrl(url);
+     }catch(e){
+      console.log(e)
+     }
       setUploading(false)
     } catch(e) {
       console.log(e)

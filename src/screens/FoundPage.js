@@ -92,7 +92,7 @@ export default function FoundPage({ navigation }) {
               {product.itemName}
             </Text>
             <View className="flex flex-row relative top-8">
-              <Ionicons name="location-outline" size={18} color="black"  />
+              <Ionicons name="location-outline" size={18} color="black"   />
               <Text className="">Category: {product.category}</Text>
             </View>
           </View>

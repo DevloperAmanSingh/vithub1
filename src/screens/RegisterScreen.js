@@ -94,7 +94,7 @@ const RegistrationScreen = ({navigation}) => {
                 .then((userCredential) => {
                     const user = userCredential.user;
                     Alert.alert("Registeration success")
-                    navigation.replace('Homescreen')
+                    navigation.replace('Homescreen ')
                     setLoading(false);
                 })
                 .catch((error) => {

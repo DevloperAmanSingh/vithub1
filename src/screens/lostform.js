@@ -1,16 +1,12 @@
 import React, { useState , useEffect } from 'react';
-import firebase  from 'firebase/compat/app'
-import  'firebase/compat/storage';
 import { View, Text, TextInput, Button, StyleSheet , Image , TouchableOpacity , Pi, ScrollView } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import * as FileSystem from'expo-file-system'
-// import Button from '../components/Button';
 import Input from '../components/Input';
 import { Dropdown } from 'react-native-element-dropdown';
 import { Ionicons } from '@expo/vector-icons';
-import { getFirestore, collection, addDoc, serverTimestamp } from 'firebase/firestore';
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import lostModel from '../../models/lostModel';
+import { db } from '../../firebase-config';
 import axios from 'axios';
 const LostItemForm = () => {
   const [value , setValue ] = useState('none')
@@ -20,7 +16,6 @@ const LostItemForm = () => {
   const [itemDescription, setItemDescription] = useState('');
   const [contactInfo, setContactInfo] = useState('');
   const [selectedImage, setSelectedImage] = useState(null);
-  const db = getFirestore();
 
   const handleSubmit = async () => {
     try {
@@ -89,24 +84,24 @@ const [user, setUser] = useState(null);
 
 
 
-const firebaseConfig = {
-  apiKey: "AIzaSyBS6I4bn3vj9pTZ6GDEL2zjUDhS4vtEORc",
-  authDomain: "rnapp-c89e4.firebaseapp.com",
-  projectId: "rnapp-c89e4",
-  storageBucket: "rnapp-c89e4.appspot.com",
-  messagingSenderId: "929063365529",
-  appId: "1:929063365529:web:d0d4dbfb813905bc980108",
-  measurementId: "G-WTHQ0KKLTE"
-};
-const app = firebase.initializeApp(firebaseConfig);
-  const data = [
-    { label: 'Mobile', value: '1' },
-    { label: 'Laptop', value: '2' },
-    { label: 'Electronic Accessories', value: '3' },
-    { label: 'Stationary', value: '4' },
-    { label: 'Bag', value: '5' },
-    { label: 'Other Items', value: '6' },
-  ];
+// const firebaseConfig = {
+//   apiKey: "AIzaSyBS6I4bn3vj9pTZ6GDEL2zjUDhS4vtEORc",
+//   authDomain: "rnapp-c89e4.firebaseapp.com",
+//   projectId: "rnapp-c89e4",
+//   storageBucket: "rnapp-c89e4.appspot.com",
+//   messagingSenderId: "929063365529",
+//   appId: "1:929063365529:web:d0d4dbfb813905bc980108",
+//   measurementId: "G-WTHQ0KKLTE"
+// };
+// const app = firebase.initializeApp(firebaseConfig);
+//   const data = [
+//     { label: 'Mobile', value: '1' },
+//     { label: 'Laptop', value: '2' },
+//     { label: 'Electronic Accessories', value: '3' },
+//     { label: 'Stationary', value: '4' },
+//     { label: 'Bag', value: '5' },
+//     { label: 'Other Items', value: '6' },
+//   ];
  
   
   const uploadMedia = async () => {

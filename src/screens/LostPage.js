@@ -1,17 +1,80 @@
 import { View, Text, SafeAreaView, Image, ScrollView , TextInput , StyleSheet , TouchableOpacity } from "react-native";
-import React , {useState} from "react";
+import React , {useState , useEffect } from "react";
+import { useFocusEffect } from '@react-navigation/native';
 import Ionicons from "@expo/vector-icons/Ionicons";
-
+import { db , storage } from "../../firebase-config";
+import { collection, getDocs } from 'firebase/firestore';
+import Loader from "../components/Loader";
+import { getDownloadURL , ref } from "firebase/storage";
 export default function LostPage({ navigation }) {
     const [searchQuery, setSearchQuery] = useState('');
     const [filteredProducts, setFilteredProducts] = useState([]);
     const [searchText, setSearchText] = useState('');
+    const [ time , setTime ] = useState('')
+    const [loading, setLoading] = React.useState(false);
+    const [items, setItems] = useState([]);
 
   const handleSearch = () => {
     // Implement your search functionality here
     console.log('Searching for:', searchText);
   };
+    useFocusEffect(
+      React.useCallback(() => {
+    const fetchImageURL = async (imageId) => {
+      try {
+        const storageRef = ref(storage, `/lostItems/${imageId}`); // Adjust the path based on your storage structure
+        const imageURL = await getDownloadURL(storageRef);
+        console.log("Image URL:", imageURL);
+        return imageURL;
+      } catch (error) {
+        return null;
+      }
+    };
+    const fetchItems = async () => {
+      setLoading(true);
+      try {
+        const querySnapshot = await getDocs(collection(db, "lostitems"));
+        const itemsArray = [];
+        for (const doc of querySnapshot.docs) {
+          try{
+          const item = { id: doc.id, ...doc.data() };
+          console.log(item.time)
+          const currentTime = new Date().getTime()
+          const timeDiff = currentTime - item.time
+          const timeDiffInHours = timeDiff / (1000 * 3600)
+          console.log(timeDiffInHours)
+          if(timeDiffInHours < 24){
+            item.time = "Today"
+          }
+          else if(timeDiffInHours < 48){
+            item.time = "Yesterday"
+          }else{
+            item.time = Math.floor(timeDiffInHours/24) + " Days ago"
+          }
 
+          const imageURL = await fetchImageURL(item.imageUrl); // Fetch the image URL
+          if (imageURL) {
+            item.imageURL = imageURL; // Add the imageUsRL to the item data
+          }
+          itemsArray.push(item);
+        }catch(e){
+          // console.log(e)
+        }
+        }
+        setItems(itemsArray)
+        console.log(items)
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching items:", error);
+      }
+    };
+
+    fetchItems();
+
+    
+    fetchImageURL();
+  }, [])
+  );
   const products = [
     {
       id: 1,
@@ -52,19 +115,23 @@ export default function LostPage({ navigation }) {
   ];
 
   return (
+
     <ScrollView className="bg-blue-200">
-      <View className="flex flex-col mt-4 bg-blue-800 h-[104px] w-[344px] mx-auto rounded-md">
-        <View className="flex flex-row mx-4 mt-5 justify-between ">
+
+      <View className="flex flex-col mt-4 bg-violet-800 h-[104px] w-[344px] mx-auto rounded-md shadow-lg"  >
+        <View className="flex flex-row mx-4 mt-4 justify-between ">
           <Text className="text-2xl font-bold text-white">Lost an item</Text>
+          <View className="my-auto">
           <Ionicons
             name="add-circle-outline"
             color="lightblue"
-            size={30}
-            className=""
-            onPress={() => navigation.navigate("lostform")}
+            size={55}
+            className="" 
+            onPress={() => navigation.navigate("ItemLostName")}
           />
+          </View>
         </View>
-        <Text className=" mx-4  mt-1 text-white">
+        <Text className=" mx-4 w-[75%] -mt-6 text-white">
           Raise a ticket here to let your friends know or Search below in the list of items.
         </Text>
       </View>
@@ -80,24 +147,25 @@ export default function LostPage({ navigation }) {
         <Ionicons name="search" size={24}  />
       </TouchableOpacity>
     </View>
-      {products.map((product) => (
-        <View className="mt-5 h-[130px] w-[344px] mb-2  bg-gray-200 mx-auto rounded-xl flex flex-row justify-between">
+
+      {items.map((items) => (
+        
+        <View key= {items.id} className="mt-7 h-[130px] w-[344px] mb-2  bg-gray-200 mx-auto rounded-xl flex flex-row justify-between">
           <View className="mx-4 mt-3">
             <View className="flex flex-row items-center">
           <Ionicons name="time-outline" size={15} color="black" />
-            <Text className="text-sm">{product.timeAgo}</Text>
+            <Text className="text-sm">{items.time}</Text>
           </View>
             <Text className="text-xl font-bold text-blue-800">
-              {product.itemName}
+              {items.itemName}
             </Text>
-            <View className="flex flex-row relative top-8">
-              <Ionicons name="location-outline" size={18} color="black" 
-               />
-              <Text className="">Category: {product.category}</Text>
+            <View className="flex flex-row relative top-9 items-center">
+              <Ionicons name="folder-open-outline" size={16} color="black" />
+              <Text className=""> Category: {items.contactInfo}</Text>
             </View>
           </View>
           <View className="mr-3 my-auto">
-          <Image source={{ uri: product.imageURL }}
+          <Image source={{ uri: items.imageURL }}
               height={100}
               width={100}
               className="rounded-md"

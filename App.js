@@ -1,6 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
-// import Homepage from './src/screens/homepage';
+import { useFonts } from 'expo-font';
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import LostItemForm from "./src/screens/lostform";
@@ -14,6 +14,7 @@ import LostPage from "./src/screens/LostPage";
 import FoundPage from "./src/screens/FoundPage";
 import ProfilePage from "./src/screens/ProfilePage";
 import Description from "./src/screens/Description";
+import ItemLostName from "./src/screens/ItemLostName";
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
@@ -90,10 +91,12 @@ export default function App() {
     // </NavigationContainer>
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
-        <Stack.Screen name='Login' component={LoginScreen}/>
+        {/* <Stack.Screen name='Login' component={LoginScreen}/>
         <Stack.Screen name='Register' 
-        component={RegistrationScreen}/>
-        <Stack.Screen name="Homescreen" component={HomeScreens} />
+        component={RegistrationScreen}/> */}
+                <Stack.Screen name="Homescreen" component={HomeScreens} />
+
+        <Stack.Screen name="ItemLostName" component={ItemLostName} />
         <Stack.Screen name="lostform" component={LostItemForm}/>
         <Stack.Screen name="founditem" component={FoundItem}/>
         <Stack.Screen name="description" component={Description}/>

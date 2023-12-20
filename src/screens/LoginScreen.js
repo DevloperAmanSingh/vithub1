@@ -96,7 +96,7 @@ const LoginScreen = ({navigation}) => {
           <Button title="Log In" onPress={validate} />
           <View className="flex flex-row items-center mx-auto">
           <Text
-            onPress={() => navigation.navigate('Registeration')}
+            onPress={() => navigation.navigate('Register')}
             style={{
               color: COLORS.black,
               fontWeight: 'bold',

@@ -3,7 +3,7 @@ import React from 'react'
 import Button from '../components/Button'
 import COLORS from '../../utils/color'
 
-const ProfilePage = () => {
+const ProfilePage = ({navigation}) => {
   return (
     <View className="mt-5">
         <Text className="text-center font-bold mb-5 text-2xl text-indigo-500 underline underline-offset-1">Your Profile Information</Text>
@@ -44,7 +44,9 @@ const ProfilePage = () => {
         justifyContent: 'center',
         alignItems: 'center',
       }}>
-      <Text style={{color: COLORS.white, fontWeight: 'bold', fontSize: 18}}>
+      <Text style={{color: COLORS.white, fontWeight: 'bold', fontSize: 18}} onPress={() => {
+        navigation.replace('Login')
+      }}>
         Logout
       </Text>
     </TouchableOpacity>
